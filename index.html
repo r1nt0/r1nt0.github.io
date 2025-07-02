@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Penguin AI in Malayalam</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .penguin-container {
+      position: relative;
+      display: inline-block;
+    }
+    .penguin {
+      width: 200px;
+    }
+    .mouth {
+      position: absolute;
+      bottom: 60px; /* adjust based on your image */
+      left: 85px;   /* adjust based on your image */
+      width: 30px;
+      height: 15px;
+      background: red;
+      border-radius: 50%;
+      display: none;
+    }
+
+    .mouth.talking {
+      display: block;
+      animation: mouthMove 0.3s infinite;
+    }
+
+    @keyframes mouthMove {
+      0%   { transform: scaleY(1); }
+      50%  { transform: scaleY(0.4); }
+      100% { transform: scaleY(1); }
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>R</h1>
+
+  <div class="penguin-container">
+    <img class="penguin" src="https://i.imgur.com/4Yzv7IJ.png" alt="Penguin in saree">
+    <div class="mouth" id="mouth"></div>
+  </div>
+
+  <br><br>
+  <input type="text" id="text" placeholder="write..." size="40">
+  <br>
+  <button onclick="speak()">read</button>
+
+  <script>
+    function speak() {
+      const text = document.getElementById("text").value;
+      const utterance = new SpeechSynthesisUtterance(text);
+      const mouth = document.getElementById("mouth");
+
+      utterance.lang = 'ml-IN';
+      utterance.rate = 0.9;
+
+      utterance.onstart = () => {
+        mouth.classList.add("talking");
+      };
+
+      utterance.onend = () => {
+        mouth.classList.remove("talking");
+      };
+
+      speechSynthesis.speak(utterance);
+    }
+  </script>
+</body>
+</html>
